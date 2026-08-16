@@ -1,0 +1,12 @@
+slug = "ai"
+name = "schematize-ai"
+tag = "IA · LLM/RAG/Agentes"
+status = "beta"
+order = 13
+current_version = "0.1.0"
+href = "/ai"
+
+[descriptions]
+pt = "Engenharia de sistemas com IA/LLM da casa: provider-agnóstico (Claude default, plugável), prompt & context engineering, RAG (chunking/embeddings/retrieval/avaliação), agents & tool-use (loop/function-calling/MCP), evals & guardrails (red-team, jailbreak, PII, saída estruturada validada, deny-by-default), custo/caching e observabilidade de LLM. Pisos: nenhum LLM decide autorização, toda saída de IA é não confiável até validada, prompt injection é ataque de 1ª linha, segredo nunca no prompt/cliente, RAG isolado por tenant."
+en = "House AI/LLM systems engineering: provider-agnostic (Claude default, pluggable), prompt & context engineering, RAG (chunking/embeddings/retrieval/evaluation), agents & tool-use (loop/function-calling/MCP), evals & guardrails (red-team, jailbreak, PII, validated structured output, deny-by-default), cost/caching and LLM observability. Floors: no LLM decides authorization, every AI output is untrusted until validated, prompt injection is a first-line attack, secrets never in the prompt/client, RAG isolated per tenant."
+es = "Ingeniería de sistemas con IA/LLM de la casa: agnóstica de proveedor (Claude por defecto, conectable), prompt & context engineering, RAG (chunking/embeddings/retrieval/evaluación), agents & tool-use (loop/function-calling/MCP), evals & guardrails (red-team, jailbreak, PII, salida estructurada validada, deny-by-default), coste/caching y observabilidad de LLM. Pisos: ningún LLM decide autorización, toda salida de IA es no confiable hasta validarse, prompt injection es un ataque de primera línea, secreto nunca en el prompt/cliente, RAG aislado por tenant."
