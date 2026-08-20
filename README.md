@@ -5,7 +5,8 @@
 > parte. Provider-agnóstico (Claude default, plugável), prompt & context engineering, RAG, agents &
 > tool-use (MCP), **evals & guardrails**, custo/caching e observabilidade de LLM — com os pisos:
 > **nenhum LLM decide autorização**, **toda saída de IA é não confiável até validada**, **prompt
-> injection é ataque de 1ª linha**, **segredo nunca no prompt/cliente**, **RAG isolado por tenant**.
+> injection é ataque de 1ª linha**, **segredo nunca no prompt/cliente**, **RAG isolado por tenant**,
+> **tool de envio de agente nunca dispara efeito externo fora de produção**.
 
 Pacote de **skill normativa para [Claude Code](https://claude.com/claude-code)**.
 Parte do catálogo **schematize skills**. Disciplina **agnóstica de linguagem e de provider** que
@@ -39,19 +40,19 @@ unzip skill-ai.zip -d .claude/skills/
 
 ## O que tem dentro
 
-- **SKILL.md** — o contrato: 8 pisos inegociáveis (nenhum LLM decide authz, saída não confiável até
+- **SKILL.md** — o contrato: 9 pisos inegociáveis (nenhum LLM decide authz, saída não confiável até
   validada, injection de 1ª linha, segredo fora do prompt/cliente, provider-agnóstico, RAG isolado
-  por tenant + cita fonte, sem eval não está pronto, observabilidade + budget desde o dia 1) + mapa
-  de references.
+  por tenant + cita fonte, sem eval não está pronto, observabilidade + budget desde o dia 1, tool de
+  envio do agente sem efeito externo fora de prd) + mapa de references.
 - **references/** — `engenharia-llm` (a base: provider plugável, prompt & context, saída validada,
   custo/caching), `rag` (ingestão→chunking→embeddings→retrieval→avaliação, isolamento por tenant),
-  `agents` (loop, function-calling, MCP, authz por tool, budget), `evals` (dataset dourado, judge
+  `agents` (loop, function-calling, MCP, authz por tool, budget, tool de envio guardada), `evals` (dataset dourado, judge
   calibrado, regressão, guardrails, teste adversarial), `seguranca-llm` (injection 1ª linha, saída
-  não confiável, nada de authz por LLM, OWASP LLM Top 10), `observabilidade-llm` (traço/tokens/custo,
+  não confiável, nada de authz por LLM, injeção→envio, OWASP LLM Top 10), `observabilidade-llm` (traço/tokens/custo,
   avaliação contínua, FinOps, fallback).
 - **assets/commands/** — `/ai-help`, `/ai-load`, `/ai-rag`, `/ai-eval`, `/ai-guardrails`,
   `/ai-claude`, `/ai-cc`, `/ai-handoff`.
-- **assets/CLAUDE.md** — regra sempre-on: os 8 pisos de IA, aditivos ao piso de segurança/IAM da
+- **assets/CLAUDE.md** — regra sempre-on: os 9 pisos de IA, aditivos ao piso de segurança/IAM da
   engenharia.
 
 ## Regra de ouro
