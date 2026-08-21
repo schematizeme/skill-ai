@@ -3,6 +3,13 @@
 Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.4.0] — 2026-08-21
+Segunda leva do saneamento (inventário da vistoria).
+
+### Adicionado
+- **`agents.md` §3.1 — MCP nas três formas.** A skill tratava MCP só como "servidor que você expõe"; entraram **connector/cliente nativo** (consumir tool de terceiro — e aí *o servidor é fonte hostil, porque a injeção indireta chega pelo **resultado** da tool*) e **agente hospedado pelo provider** (muda onde o segredo vive e quem executa a tool: sem cofre gerenciado, a tool sensível fica do seu lado, e *o agente hospedado chama a **sua** API, não o seu banco*). Com a pergunta que unifica as três — **quem resolve identidade, tenant e escopo?** — e a resposta que não muda: o seu servidor.
+- **`engenharia-llm.md` — as duas alavancas de custo que faltavam, e que hoje são as principais:** **esforço de raciocínio/adaptive thinking** (multiplica tokens de saída; é **escolha por tarefa**, **medida no eval** — *se subir o esforço não muda a métrica, você está pagando por nada* — e registrada no span) e **teto de trabalho por tarefa** (`task_budget`, limites de loop): *em agente o custo não vem de uma chamada, vem do laço — sem teto, um loop de tool que se auto-alimenta transforma um bug de prompt numa fatura*.
+
 ## [0.3.0] — 2026-08-21
 O piso 7 (**"sem eval, não está pronto"**) deixou de ser prosa. A vistoria de 2026-08-21 achou a skill com **zero scripts** — *a tese central só existia como texto*.
 
