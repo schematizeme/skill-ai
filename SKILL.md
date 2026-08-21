@@ -2,7 +2,7 @@
 name: schematize-ai
 metadata:
   version: 0.2.0
-description: Engenharia de sistemas com IA/LLM da casa — a disciplina de construir software que usa modelos de linguagem com o MESMO rigor de segurança, dados e operação do resto da stack, nunca como brinquedo à parte. Provider-agnóstico (Anthropic/Claude como default plugável, nunca acoplado — troca de provider é config, não reescrita); cobre prompt & context engineering, RAG (ingestão, chunking, embeddings, retrieval, avaliação), agents & tool-use (loop, function calling, MCP), evals & guardrails (red-team, jailbreak, PII/safety, saída estruturada VALIDADA, deny-by-default), custo/latência/caching e observabilidade de LLM (traços, tokens por chamada, avaliação contínua). PISOS inegociáveis: prompt injection é ataque de 1ª linha (todo texto que entra no prompt — do usuário, do RAG, de tool — é hostil até prova em contrário); toda saída de IA é NÃO CONFIÁVEL até validada por schema/política determinística; NENHUM LLM decide autorização — enforcement é sempre determinístico no servidor; segredo nunca no prompt/no cliente; isolamento por tenant no índice do RAG; tool de envio de agente NUNCA dispara efeito externo fora de produção (sink por default, modelo não decide destinatário). Use SEMPRE que for projetar, gerar, revisar ou refatorar qualquer feature com LLM — chatbot, assistente, copiloto, agente, pipeline RAG, sumarização/extração/classificação/reescrita, LLM-as-judge, geração de texto/código, tool-use/function-calling/MCP — mesmo sem citar "IA" nem "padrão", e mesmo que peça só "chama a API do modelo" ou "põe um GPT aí". Pareia com a schematize-engineering (a BASE: segurança §13, IAM, dados/eventos, observabilidade LGTM, DoD §35, archive §28), com a schematize-pentest (o red-team de LLM — OWASP LLM Top 10, o oráculo do "seguro de verdade") e com a linguagem de backend escolhida (go/rust/elixir/csharp/zig/ruby — o enforcement determinístico e as tools rodam no servidor daquela stack).
+description: Engenharia de sistemas com IA/LLM da casa — software que usa modelos de linguagem com o MESMO rigor de segurança, dados e operação do resto da stack. Provider-agnóstico (Anthropic/Claude como default plugável; trocar provider é config, não reescrita). Cobre prompt & context engineering, RAG (ingestão, chunking, embeddings, retrieval, avaliação), agents & tool-use (loop, function calling, MCP), evals & guardrails (red-team, jailbreak, PII/safety, saída estruturada VALIDADA, deny-by-default), custo/latência/caching e observabilidade de LLM. PISOS: prompt injection é ataque de 1ª linha (texto que entra no prompt é hostil); saída de IA é NÃO CONFIÁVEL até validada por schema; NENHUM LLM decide autorização; segredo nunca no prompt; isolamento por tenant no RAG; tool de envio nunca dispara efeito externo fora de prd. Use SEMPRE que for projetar, gerar ou revisar feature com LLM — chatbot, copiloto, agente, RAG, sumarização/extração/classificação, LLM-as-judge, tool-use/MCP — mesmo que peça só "chama a API".
 ---
 
 # Engenharia de sistemas com IA/LLM da casa (schematize-ai)
@@ -137,6 +137,8 @@ Independente do reference, estes limites nunca são cruzados:
    **exfiltração de dado + abuso de recurso** na mesma tacada — e ainda queima a reputação do
    domínio (`references/seguranca-llm.md` §4.1).
 
+   **O gate de máquina:** `scripts/check-external-effects.sh` (distribuído idêntico nesta skill — não é ponteiro para outro repo). Rode-o no CI: ele reprova endereço de caixa real em seed/fixture/persona, chave de provedor não-sandbox em `.env` de não-prd (fail-closed quando o ambiente não está declarado) e domínio de teste sem null MX. O vermelho dele está provado em `scripts/check-external-effects.test.sh`.
+
 ## Relação com as outras skills
 
 - **schematize-engineering** — a **BASE**. A engenharia de IA herda tudo dela: **segurança**
@@ -158,3 +160,13 @@ Independente do reference, estes limites nunca são cruzados:
   stack escolhida**. O piso é agnóstico; o PEP determinístico, a validação de saída, o servidor que
   guarda a chave e as tools do agente são implementados na linguagem de backend (por fit + ADR) —
   e o front (schematize-web) nunca segura a chave nem confia na saída do modelo no cliente.
+- **schematize-data** — o RAG **é um sistema de dados**, e por isso herda a disciplina de lá, não
+  uma versão relaxada dela. O corpus tem **contrato** (o que entra, com que schema, de que fonte);
+  a ingestão é **pipeline** (idempotente, reprocessável, com quarentena para o documento que não
+  parseia); o índice tem **lineage** (todo chunk rastreável até o documento e a versão de origem —
+  citação sem proveniência não é citação); e o conteúdo carrega **classificação de PII, base legal
+  e retenção**, porque *"está só no embedding"* não é anonimização — embedding é dado derivado e
+  reversível o bastante para reidentificar. O **isolamento por tenant** do §5 desta skill é o
+  deny-by-default da `schematize-data` aplicado ao índice vetorial. Corpus que sai de produção para
+  um ambiente de avaliação segue a mesma regra de cópia da `schematize-data` (PII reescrita,
+  endereço em rota nula).
