@@ -1,5 +1,25 @@
 # Changelog — schematize-ai
 
+Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
+com versionamento [SemVer](https://semver.org/lang/pt-BR/).
+
+## [0.3.0] — 2026-08-21
+O piso 7 (**"sem eval, não está pronto"**) deixou de ser prosa. A vistoria de 2026-08-21 achou a skill com **zero scripts** — *a tese central só existia como texto*.
+
+### Adicionado
+- **`assets/schemas/eval-suite.schema.json`** — o dataset dourado como formato: `repeticoes`, `limiar_aprovacao`, `metrica_chave` (piso absoluto + queda máxima) e casos com **fatia** obrigatória e **oráculo** declarado.
+- **`scripts/eval-run.mjs`** — o runner: N amostras por caso, 5 oráculos **determinísticos** (`exato`, `contem`, `regex`, `nega`, `json`), métricas por fatia, latência p95 e tokens, saída JSON. Não conhece provider nem guarda chave — quem faz isso é o **adaptador, que vive no projeto**; é o que permite rodar offline e testar o próprio gate.
+- **`scripts/eval-gate.mjs`** — o veredito com exit code (`0`/`1`/`2`). Reprova: **qualquer** falha adversarial (dura, sem limiar que compre); caso abaixo do limiar de aprovação; acerto abaixo do piso; regressão **na média e em qualquer fatia**; **caso do baseline que sumiu do run**; suíte **sem nenhum caso adversarial**. Nomeia caso *instável* (passa 2/3) mesmo quando o limiar o deixa passar.
+- **`scripts/eval.test.sh`** — **19 casos**, quase todos vermelhos de propósito: vazamento de system prompt, injeção **indireta** (payload dentro do documento), caso 1/3, exceção do adaptador (que **não** é "inconclusivo"), prosa onde se exige JSON, regressão localizada numa fatia, suíte que encolheu, suíte sem adversarial, id duplicado, caso sem fatia, oráculo inventado.
+- **`assets/templates/`** — `eval-suite.exemplo.json` (8 casos, 3 adversariais), `adaptador.exemplo.mjs` (SDK real) e `adaptador.falso.mjs` (determinístico, com a ressalva escrita de que testa a tubulação, não o modelo).
+- **`assets/ci/ai-eval.yml`** — o workflow, com as duas decisões que ninguém escreve: qual adaptador roda no PR, e que o job precisa ser **required** para travar alguma coisa.
+
+### Corrigido
+- `/ai-eval` §4 mandava *"fixe temperatura/seed onde der"* — contradizendo o que `references/evals.md` §5 já registrava como verificado: nos modelos correntes do provider default `temperature`/`top_p`/`top_k` foram **removidos** (`400`) e `seed` **nunca existiu**. Variância se controla com repetições + limiar + saída validada por schema.
+
+### Mudado
+- `references/seguranca-llm.md` §8 — o item *"Red-team no CI com gate"* agora diz **com o quê**: os casos adversariais da suíte rodando em todo PR, com `/pentest-ai` como o red-team *conduzido* ao lado (um não substitui o outro).
+
 ## [0.2.0] — 2026-08-20
 
 Propagação do piso **efeito externo NUNCA sai de não-produção** (normativa em
@@ -25,8 +45,6 @@ sozinho.
 - **references/evals.md** §7: caso adversarial **"injeção que pede ENVIO"** (espera-se recusa
   determinística, nada sai) e a suíte rodando contra o **sink**; DoD atualizada.
 - **assets/CLAUDE.md**: piso sempre-on **9** com o mesmo recorte.
-
-Formato: [Keep a Changelog](https://keepachangelog.com/pt-BR/). Versionamento semântico.
 
 ## [0.1.0] — 2026-08-15
 

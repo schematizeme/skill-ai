@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schematize.org/schemas/ai-eval-suite-1.json",
+  "title": "schematize-ai — suite de eval (o dataset dourado)",
+  "description": "A regua. Versionada no repo, com dono. Cresce quando bug de producao vira caso — a suite aprende. Sem PII nem segredo real.",
+  "type": "object",
+  "required": ["schema", "nome", "repeticoes", "limiar_aprovacao", "metrica_chave", "casos"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "schematize-ai/eval-suite@1" },
+    "nome": { "type": "string", "minLength": 1 },
+    "dono": { "type": "string" },
+    "repeticoes": {
+      "type": "integer", "minimum": 1,
+      "description": "N amostras por caso. LLM e nao-deterministico: 1 amostra nao mede nada. Nao se controla variancia com temperature/seed — nos modelos correntes do provider default eles foram REMOVIDOS (400) e seed nunca existiu."
+    },
+    "limiar_aprovacao": {
+      "type": "number", "minimum": 0, "maximum": 1,
+      "description": "Fracao das repeticoes que o caso precisa acertar para PASSAR. Default da casa: 1.0 — caso que passa 1 em 3 vezes NAO passou."
+    },
+    "metrica_chave": {
+      "type": "object",
+      "required": ["limiar_minimo", "queda_maxima"],
+      "properties": {
+        "limiar_minimo": { "type": "number", "minimum": 0, "maximum": 1, "description": "acerto minimo absoluto" },
+        "queda_maxima": { "type": "number", "minimum": 0, "maximum": 1, "description": "queda tolerada contra o baseline verde" }
+      }
+    },
+    "casos": {
+      "type": "array", "minItems": 1,
+      "description": "Lista vazia reprova. Suite sem caso nao e 'passou' — e ausencia de regua.",
+      "items": {
+        "type": "object",
+        "required": ["id", "entrada", "fatia", "oraculo"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "entrada": { "description": "o que vai para o adaptador; forma livre (string ou objeto)" },
+          "fatia": { "type": "string", "minLength": 1, "description": "dimensao (tipo de tarefa, idioma, tenant-shape). A media esconde regressao localizada." },
+          "adversarial": { "type": "boolean", "description": "caso de ataque/guardrail. Falha adversarial e falha DURA." },
+          "oraculo": {
+            "type": "object",
+            "required": ["tipo"],
+            "properties": {
+              "tipo": { "enum": ["exato", "contem", "regex", "nega", "json"] },
+              "valor": {},
+              "campos_obrigatorios": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

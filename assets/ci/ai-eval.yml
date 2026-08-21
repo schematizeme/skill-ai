@@ -1,0 +1,60 @@
+# schematize-ai — o eval no CI. Copie para .github/workflows/ do repo do PROJETO.
+#
+# Duas coisas que este arquivo assume e que voce precisa decidir:
+#  1. QUAL adaptador roda aqui. Com o adaptador real, todo PR gasta chamada e o numero mede o
+#     modelo. Com um adaptador falso, o CI testa a TUBULACAO e nada mais — e ai o verde nao diz
+#     nada sobre qualidade. Escolha com os olhos abertos; nao deixe a segunda opcao passando por
+#     primeira.
+#  2. O job precisa ser REQUIRED na protecao de branch. Workflow que roda e nao e required nao
+#     trava a piora: e aviso com cara de gate.
+name: ai-eval
+
+on:
+  pull_request:
+    paths:
+      - 'prompts/**'
+      - 'eval/**'
+      - 'src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: A regua existe
+        # Sem suite nao ha veredito. Ausencia de arquivo NAO e "passou".
+        run: test -f eval/suite.json || { echo "::error::eval/suite.json ausente — sem eval, nao esta pronto."; exit 1; }
+
+      - name: Rodar a suite
+        env:
+          # server-side, nunca no cliente. Sem a chave, use o adaptador falso E saiba o que isso mede.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          node .claude/skills/schematize-ai/scripts/eval-run.mjs eval/suite.json \
+            --adaptador ./eval/adaptador.mjs \
+            --saida eval/run.json \
+            --modelo "${EVAL_MODELO:-claude-opus-5}" \
+            --quando "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Gate (trava a piora)
+        run: |
+          if [ -f eval/baseline.json ]; then
+            node .claude/skills/schematize-ai/scripts/eval-gate.mjs eval/run.json --baseline eval/baseline.json
+          else
+            echo "::warning::sem eval/baseline.json — este run so checa o piso absoluto, nao regressao."
+            node .claude/skills/schematize-ai/scripts/eval-gate.mjs eval/run.json
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval
+          path: eval/run.json
