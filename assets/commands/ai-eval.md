@@ -35,7 +35,7 @@ Isto **roda**; não é um conselho:
 # 2. o adaptador, no repo do projeto (é ele que conhece o provider):
 #                                                        assets/templates/adaptador.exemplo.mjs
 node .claude/skills/schematize-ai/scripts/eval-run.mjs eval/suite.json \
-     --adaptador ./eval/adaptador.mjs --saida eval/run.json --modelo claude-opus-5
+     --adaptador ./eval/adaptador.mjs --saida eval/run.json --modelo "$EVAL_MODELO"   # id do anexo stack-versoes.md; sem default
 
 # 3. o veredito: 0 passa · 1 REPROVA · 2 documento inválido
 node .claude/skills/schematize-ai/scripts/eval-gate.mjs eval/run.json --baseline eval/baseline.json
@@ -49,8 +49,8 @@ passaria); **caso do baseline que sumiu do run** (suíte que encolhe não é su�
 
 **Não-determinismo:** N amostras e limiar de aprovação — caso que passa 1 em 3 **não** passou, e o
 gate o nomeia como *instável* mesmo quando o limiar o deixa passar. E **não apele para
-`temperature`/`seed`**: nos modelos correntes do provider default esses parâmetros foram
-**removidos** (`400`) e `seed` nunca existiu (✔ verificado em 2026-08-21). Variância se controla com
+`temperature`/`seed`**: o estado desses parâmetros por família de modelo está em
+`references/stack-versoes.md` (anexo volátil). Variância se controla com
 repetições, limiar e **saída validada por schema** — não com parâmetro de sampling.
 
 ## 5. Guardrails entram na suíte (§7 — ver `/ai-guardrails`)

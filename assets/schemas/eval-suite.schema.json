@@ -12,7 +12,7 @@
     "dono": { "type": "string" },
     "repeticoes": {
       "type": "integer", "minimum": 1,
-      "description": "N amostras por caso. LLM e nao-deterministico: 1 amostra nao mede nada. Nao se controla variancia com temperature/seed — nos modelos correntes do provider default eles foram REMOVIDOS (400) e seed nunca existiu."
+      "description": "N amostras por caso. LLM e nao-deterministico: 1 amostra nao mede nada. Variancia nao se controla com parametro de sampling (ver references/stack-versoes.md)."
     },
     "limiar_aprovacao": {
       "type": "number", "minimum": 0, "maximum": 1,

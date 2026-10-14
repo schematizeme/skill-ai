@@ -103,11 +103,10 @@ Saída de LLM que o sistema consome é **estruturada e validada** — nunca "par
   SQL/comando de shell/HTML sem sanitização, **não** dispara ação irreversível sem authz + validação
   (insecure output handling — `seguranca-llm.md`). A saída é **proposta**; o servidor determinístico
   dispõe.
-- **Determinismo onde dá — e o mecanismo REAL, não o folclore.** ✔ **Verificado em 2026-08-21:**
-  nos modelos correntes do provider default, **`temperature`/`top_p`/`top_k` foram REMOVIDOS e
-  retornam `400`**, e **`seed` nunca existiu na API**. Prescrever "fixe temperature/seed" é
-  prescrever uma chamada que falha — eram as duas únicas alavancas de determinismo que este
-  arquivo citava. O que de fato reduz variância, em ordem de força:
+- **Determinismo onde dá — e o mecanismo REAL, não o folclore.** Parâmetros de sampling
+  (`temperature`/`top_p`/`top_k`) e `seed` **não são alavanca confiável**: o estado por família de
+  modelo está em `stack-versoes.md` (anexo volátil). Não prescreva "fixe temperature/seed". O que
+  de fato reduz variância, em ordem de força:
   1. **Saída estruturada com schema** (`output_config.format`) e **tool com `strict: true`** — o
      formato deixa de ser negociado em prosa e passa a ser **validado**. É o mais próximo de
      determinismo que existe, e casa com o piso §4 (*saída de IA é não-confiável até validada*).

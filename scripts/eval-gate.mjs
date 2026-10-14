@@ -73,7 +73,7 @@ function gate(run, base) {
   }
 
   // 7. Reprodutibilidade: 1 repeticao nao mede nao-determinismo.
-  if (run.repeticoes < 2) avisos.push('repeticoes=1: nao mede variancia. LLM nao-deterministico exige N amostras — e nao adianta apelar para temperature/seed (removidos/inexistentes nos modelos correntes do provider default).')
+  if (run.repeticoes < 2) avisos.push('repeticoes=1: nao mede variancia. LLM nao-deterministico exige N amostras — e parametro de sampling nao e o remedio (ver references/stack-versoes.md).')
   if (run.modelo === 'nao-declarado') avisos.push('modelo nao declarado no run — comparacao com baseline fica sem lastro')
 
   return { falhas, avisos }

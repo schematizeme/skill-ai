@@ -67,9 +67,8 @@ Usar um LLM para avaliar saída de LLM é poderoso e traiçoeiro:
   tirar caso é **decisão explícita** (sai do baseline, com motivo), nunca omissão. Pelo mesmo motivo,
   suíte **sem nenhum caso adversarial** reprova — o gate conta.
 - **Não-determinismo:** rode N amostras e reporte média/variância; um caso que passa 1 em 3 vezes
-  **não** passou. **Não conte com `temperature`/`seed` para isso** — nos modelos correntes do
-  provider default eles foram removidos (`400`) e `seed` nunca existiu (✔ verificado em
-  2026-08-21; ver `engenharia-llm.md` §2). Variância se controla com **saída estruturada
+  **não** passou. **Não conte com `temperature`/`seed` para isso** (estado por família de modelo em
+  `stack-versoes.md`; ver `engenharia-llm.md` §2). Variância se controla com **saída estruturada
   validada por schema**, **N repetições com limiar de aprovação** e **oráculo determinístico** —
   não com um parâmetro de sampling.
 

@@ -5,12 +5,17 @@
 > que o corpo normativo diga **princípio** e nunca **estado da API** — o lint do catálogo (regra
 > `anexo-volatil`) reprova fato datado cravado fora daqui.
 >
-> **Verificado em: 2026-08-21.** Cadência: **revisão trimestral**, e sempre antes de um release.
+> **Verificado em: 2026-10-14 (ids da família Claude 5; parâmetros de sampling marcados para reverificar).** Cadência: **revisão trimestral**, e sempre antes de um release.
 
 ## IDs de modelo — NÃO escreva de memória
 
-- IDs do provider default têm a forma **`claude-opus-5`**, **`claude-sonnet-5`**,
-  **`claude-haiku-4-5`** e **não levam sufixo de data**. ID inválido é **404 no primeiro request**.
+- Família **Claude 5** do provider default (verificada em 2026-10-14), ids **sem sufixo de data**:
+  - **`claude-opus-5-5`** — o mais capaz da linha Opus; raciocínio profundo e agentes de horizonte longo.
+  - **`claude-sonnet-5-5`** — o equilíbrio capacidade/custo/latência; o default para carga geral.
+  - **`claude-haiku-5-5`** — o rápido e barato; classificação, extração e roteamento em volume.
+  - **`claude-fable-5-1`** — linha Fable; consulte a doc oficial para o papel atual antes de pinar.
+  - Preço **não** é cravado aqui: leia a tabela oficial no momento da decisão.
+  ID inválido é **404 no primeiro request**.
 - **A lista muda mais rápido que este arquivo.** Consulte `GET /v1/models` (que também devolve
   janela de contexto e capacidades) ou a doc oficial antes de pinar.
 - Modelo é **config + ADR**, nunca literal espalhado na regra de negócio (`engenharia-llm.md` §2).
@@ -19,7 +24,7 @@
 
 | Parâmetro | Estado (verificado em 2026-08-21) |
 |---|---|
-| `temperature` / `top_p` / `top_k` | **removidos** nos modelos correntes do provider default — retornam **400**. |
+| `temperature` / `top_p` / `top_k` | **removidos** nos modelos correntes do provider default (família Claude 5) — retornam **400**. <!-- reverificar --> |
 | `seed` | **nunca existiu** na API. |
 | `budget_tokens` (thinking) | removido nos modelos correntes; o controle é `output_config.effort`. |
 

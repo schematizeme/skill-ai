@@ -41,7 +41,7 @@ jobs:
           node .claude/skills/schematize-ai/scripts/eval-run.mjs eval/suite.json \
             --adaptador ./eval/adaptador.mjs \
             --saida eval/run.json \
-            --modelo "${EVAL_MODELO:-claude-opus-5}" \
+            --modelo "${EVAL_MODELO:?defina EVAL_MODELO (id do modelo, ver stack-versoes.md)}" \
             --quando "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
       - name: Gate (trava a piora)

@@ -2,7 +2,8 @@
 name: schematize-ai
 metadata:
   version: 0.4.0
-description: Engenharia de sistemas com IA/LLM da casa — software que usa modelos de linguagem com o MESMO rigor de segurança, dados e operação do resto da stack. Provider-agnóstico (Anthropic/Claude como default plugável; trocar provider é config, não reescrita). Cobre prompt & context engineering, RAG (ingestão, chunking, embeddings, retrieval, avaliação), agents & tool-use (loop, function calling, MCP), evals & guardrails (red-team, jailbreak, PII/safety, saída estruturada VALIDADA, deny-by-default), custo/latência/caching e observabilidade de LLM. PISOS: prompt injection é ataque de 1ª linha (texto que entra no prompt é hostil); saída de IA é NÃO CONFIÁVEL até validada por schema; NENHUM LLM decide autorização; segredo nunca no prompt; isolamento por tenant no RAG; tool de envio nunca dispara efeito externo fora de prd. Use SEMPRE que for projetar, gerar ou revisar feature com LLM — chatbot, copiloto, agente, RAG, sumarização/extração/classificação, LLM-as-judge, tool-use/MCP — mesmo que peça só "chama a API".
+description: >-
+  Engenharia de software com LLM: prompt/context engineering, RAG, agents e tool-use/MCP, evals e guardrails, custo e observabilidade, com o mesmo rigor de segurança do resto da stack. Provider-agnóstico. Use ao projetar ou revisar chatbot, copiloto, agente, RAG, extração/classificação, LLM-as-judge ou qualquer chamada a API de modelo.
 ---
 
 # Engenharia de sistemas com IA/LLM da casa (schematize-ai)
@@ -167,7 +168,7 @@ Independente do reference, estes limites nunca são cruzados:
   (§28)** e do **índice/MAPA (§39)**. Esta skill é o **recorte de IA/LLM** desse piso.
 - **schematize-pentest** — o **red-team de LLM** e o oráculo do "seguro de verdade". A segurança
   de IA aqui é o lado **construtivo** (como desenhar pra não vazar); a pentest é o lado
-  **adversarial** (`/pentest-ai`: prompt injection direto/indireto, insecure output handling,
+  **adversarial** (`schematize-pentest` → `/pentest-ai`: prompt injection direto/indireto, insecure output handling,
   excessive agency, cross-tenant no RAG, leak de system prompt, DoS de custo — OWASP LLM Top 10).
   Guardrail sem red-team é teatro; red-team sem guardrail é só a lista de como te invadem.
 - **claude-api** — a **referência de fato** do provider default. Sempre que a tarefa citar Claude/
