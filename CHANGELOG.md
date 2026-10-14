@@ -13,6 +13,9 @@ com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 - **Description** reduzida (~270 chars) para caber no orçamento de listagem (soma das 31 skills ≤ 8500; o Claude Code corta a listagem acima disso).
 - **CI:** actions de terceiros pinadas por SHA completo com comentário `# vX.Y.Z` (mesma major em uso; supply chain), mesmo SHA em todas as skills.
 
+### Alterado
+- `scripts/check-external-effects{,.test}.sh` viram arquivos herdados da engineering (cabeçalho "herdado de schematize-engineering — não edite aqui"); conteúdo inalterado.
+
 ## [0.4.0] — 2026-08-21
 Segunda leva do saneamento (inventário da vistoria).
 
