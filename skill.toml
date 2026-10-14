@@ -3,7 +3,7 @@ name = "schematize-ai"
 tag = "IA · LLM/RAG/Agentes"
 status = "beta"
 order = 13
-current_version = "0.6.0"
+current_version = "0.6.1"
 href = "/ai"
 
 [descriptions]
