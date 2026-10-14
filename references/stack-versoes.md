@@ -5,7 +5,7 @@
 > que o corpo normativo diga **princípio** e nunca **estado da API** — o lint do catálogo (regra
 > `anexo-volatil`) reprova fato datado cravado fora daqui.
 >
-> **Verificado em: 2026-10-14 (ids da família Claude 5; parâmetros de sampling marcados para reverificar).** Cadência: **revisão trimestral**, e sempre antes de um release.
+> **Verificado em: 2026-10-14 (ids, papéis e parâmetros de sampling da família Claude 5 conferidos na doc oficial).** Cadência: **revisão trimestral**, e sempre antes de um release.
 
 ## IDs de modelo — NÃO escreva de memória
 
@@ -13,7 +13,7 @@
   - **`claude-opus-5-5`** — o mais capaz da linha Opus; raciocínio profundo e agentes de horizonte longo.
   - **`claude-sonnet-5-5`** — o equilíbrio capacidade/custo/latência; o default para carga geral.
   - **`claude-haiku-5-5`** — o rápido e barato; classificação, extração e roteamento em volume.
-  - **`claude-fable-5-1`** — linha Fable; consulte a doc oficial para o papel atual antes de pinar.
+  - **`claude-fable-5-1`** — o de raciocínio exigente e trabalho agêntico de longo horizonte; mais lento que os demais. A doc manda começar pelo Opus e subir para o Fable quando o eval no Opus em esforço alto ainda não bate a meta. Fonte: <https://platform.claude.com/docs/en/models/fable-5-1/overview> (2026-10-14).
   - Preço **não** é cravado aqui: leia a tabela oficial no momento da decisão.
   ID inválido é **404 no primeiro request**.
 - **A lista muda mais rápido que este arquivo.** Consulte `GET /v1/models` (que também devolve
@@ -22,9 +22,9 @@
 
 ## Parâmetros que saíram da API
 
-| Parâmetro | Estado (verificado em 2026-08-21) |
+| Parâmetro | Estado (verificado em 2026-10-14) |
 |---|---|
-| `temperature` / `top_p` / `top_k` | **removidos** nos modelos correntes do provider default (família Claude 5) — retornam **400**. <!-- reverificar --> |
+| `temperature` / `top_p` / `top_k` | **removidos**: qualquer valor diferente do default retorna **400** no Opus 4.7 e posteriores, incluindo o Opus 5.5 (o SDK Python v1+ nem define os parâmetros). Omita-os; guie o comportamento por prompt. `temperature=0` nunca garantiu saída idêntica. Fonte: <https://platform.claude.com/docs/en/models/opus-5-5/migration-guide> (2026-10-14); para Sonnet/Haiku/Fable, a doc de migração do Opus 5.5 não os cita, então valide no primeiro request. |
 | `seed` | **nunca existiu** na API. |
 | `budget_tokens` (thinking) | removido nos modelos correntes; o controle é `output_config.effort`. |
 

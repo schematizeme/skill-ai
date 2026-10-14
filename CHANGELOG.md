@@ -7,7 +7,8 @@ com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 ### Corrigido
 - **IDs de modelo** em `stack-versoes.md` atualizados para a família Claude 5 (`claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `claude-fable-5-1`), com o papel de cada um e sem preço. Os ids antigos estavam defasados.
 - **Id literal só no anexo:** `engenharia-llm.md`, `ai-eval.yml`, `ai-eval.md` e `adaptador.exemplo.mjs` não cravam mais modelo; leem `EVAL_MODELO` e falham com mensagem clara se ausente.
-- **"temperature/top_p/top_k removidos (400)"** deixou de ser repetido em 5 arquivos; vive só no anexo volátil, atrelado à família e marcado `<!-- reverificar -->` (não confirmado em fonte oficial nesta data).
+- **"temperature/top_p/top_k removidos (400)"** deixou de ser repetido em 5 arquivos; vive só no anexo volátil, atrelado à família (agora confirmado na doc oficial, ver abaixo).
+- **Sampling confirmado na doc oficial (2026-10-14):** valor não-default de `temperature`/`top_p`/`top_k` dá 400 no Opus 4.7+ (inclui 5.5); removido o `<!-- reverificar -->` e citada a fonte; escopo restrito ao que a doc afirma. Papel do `claude-fable-5-1` descrito (raciocínio exigente / agêntico de longo horizonte), sem preço.
 - `SKILL.md` cita `/pentest-ai` prefixado com `schematize-pentest`.
 
 ## [0.4.0] — 2026-08-21
