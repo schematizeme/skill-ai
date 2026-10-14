@@ -183,3 +183,5 @@ que este reference **defende**:
 > Regra de bolso: **assuma que a injeção passa e que a saída mente — e projete para que nenhuma das
 > duas importe.** Tira-se o poder do modelo (authz e execução são do servidor determinístico), e a
 > segurança deixa de depender de o modelo "se comportar".
+
+Bot de chat com LLM: entrada do chat é não confiável; transporte, token e rate limit em `schematize-bots → references/moderacao-entrada-privacidade.md`.
