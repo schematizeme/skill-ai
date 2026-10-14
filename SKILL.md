@@ -1,7 +1,7 @@
 ---
 name: schematize-ai
 metadata:
-  version: 0.5.0
+  version: 0.5.1
 description: >-
   Engenharia com LLM: prompt/context, RAG, agents e tool-use/MCP, evals, guardrails, custo e observabilidade,
   provider-agnóstico. Use ao projetar ou revisar chatbot, copiloto, agente, RAG, extração ou API de modelo.
@@ -21,7 +21,7 @@ confiável até validada**. Quem inverte qualquer uma delas — deixa o modelo *
 confia no texto do RAG/usuário/tool, ou executa a saída crua — não construiu um produto de IA,
 construiu um incidente agendado.
 
-**Versão:** skill `schematize-ai` v0.5.0. Changelog em `CHANGELOG.md`.
+**Versão:** skill `schematize-ai` v0.5.1. Changelog em `CHANGELOG.md`.
 
 ## Comandos (Claude Code)
 
