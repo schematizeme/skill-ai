@@ -3,6 +3,12 @@
 Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.5.1] — 2026-10-14
+Reduz a description para o orçamento de listagem.
+
+### Alterado
+- Description reduzida (≤235 chars) para caber no orçamento de listagem de skills (soma ≤8300); mesmo território, fronteiras com as irmãs preservadas.
+
 ## [0.5.0] — 2026-10-14
 ### Corrigido
 - **IDs de modelo** em `stack-versoes.md` atualizados para a família Claude 5 (`claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `claude-fable-5-1`), com o papel de cada um e sem preço. Os ids antigos estavam defasados.

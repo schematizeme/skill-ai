@@ -3,9 +3,8 @@ name: schematize-ai
 metadata:
   version: 0.5.0
 description: >-
-  Engenharia de software com LLM: prompt/context, RAG, agents e tool-use/MCP, evals, guardrails, custo e
-  observabilidade, provider-agnóstico. Use ao projetar ou revisar chatbot, copiloto, agente, RAG,
-  extração/classificação, LLM-as-judge ou qualquer chamada a API de modelo.
+  Engenharia com LLM: prompt/context, RAG, agents e tool-use/MCP, evals, guardrails, custo e observabilidade,
+  provider-agnóstico. Use ao projetar ou revisar chatbot, copiloto, agente, RAG, extração ou API de modelo.
 ---
 
 # Engenharia de sistemas com IA/LLM da casa (schematize-ai)
