@@ -52,6 +52,9 @@ Usar um LLM para avaliar saída de LLM é poderoso e traiçoeiro:
 
 ## 5. Regressão e gate no CI (trava a piora)
 
+> O ciclo geral de regressão (bug visto vermelho antes do fix, bisect) é de `schematize-regression`;
+> a regressão de **prompt, modelo e RAG** é medida aqui, com dataset dourado e juiz calibrado.
+
 > **Isto tem forma.** `scripts/eval-run.mjs` roda a suíte contra o adaptador do projeto e emite o
 > JSON; `scripts/eval-gate.mjs` dá o veredito com exit code; `assets/ci/ai-eval.yml` é o workflow.
 > O que segue abaixo é a regra que esses três implementam — e `scripts/eval.test.sh` (19 casos) é

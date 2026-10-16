@@ -207,6 +207,10 @@ Independente do reference, estes limites nunca são cruzados:
   stack escolhida**. O piso é agnóstico; o PEP determinístico, a validação de saída, o servidor que
   guarda a chave e as tools do agente são implementados na linguagem de backend (por fit + ADR) —
   e o front (schematize-web) nunca segura a chave nem confia na saída do modelo no cliente.
+- **schematize-regression** — o **ciclo geral** "o defeito corrigido não volta" (teste vermelho antes do
+  fix, bisect). Os **evals de regressão de prompt/modelo/RAG** (dataset dourado, juiz calibrado, gate
+  que trava a piora) continuam **aqui** (`references/evals.md` §5); lá está só o ponteiro de fronteira
+  (`schematize-regression` → `references/contrato-dados-ia.md`).
 - **schematize-data** — o RAG **é um sistema de dados**, e por isso herda a disciplina de lá, não
   uma versão relaxada dela. O corpus tem **contrato** (o que entra, com que schema, de que fonte);
   a ingestão é **pipeline** (idempotente, reprocessável, com quarentena para o documento que não
